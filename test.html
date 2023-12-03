@@ -11,8 +11,28 @@
 </head>
 
 <body>
+  <h1>Test HTML for 403, 411, 400</h1>
 
-  <p>Congratulations! Your Web Server is Working!</p>
+  <!-- Form for 403 Forbidden -->
+  <form action="/forbidden" method="GET">
+      <button type="submit">Send 403 Forbidden Request</button>
+  </form>
+
+  <!-- Form for 411 Length Required -->
+  <form action="/length_required" method="POST">
+      <button type="submit">Send 411 Length Required Request</button>
+  </form>
+
+  <!-- Form for 400 Bad Request -->
+  <form action="/bad_request" method="GET">
+      <input type="text" name="param" placeholder="Enter parameter">
+      <button type="submit">Send 400 Bad Request</button>
+  </form>
+
+  <!-- Form for 304 -->
+  <form action="/not_modified" method="GET">
+    <button type="submit">Send 304 Not Modified Request</button>
+</form>
 
 </body>
 
