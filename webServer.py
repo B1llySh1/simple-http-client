@@ -134,8 +134,6 @@ def processHTMLrequest(request: str, clientSocket):
     requestCommands = requestLine.split(" ")
 
     if requestCommands[0] == "GET":
-        if need411Response(request, clientSocket):
-            return
         getRequest(request, clientSocket)
         return
 
@@ -144,8 +142,6 @@ def processHTMLrequest(request: str, clientSocket):
             return
         pass
     elif requestCommands[0] == "HEAD":
-        if need411Response(request, clientSocket):
-            return
         pass
     else:
         # Bad request
@@ -186,7 +182,7 @@ def main():
         # print("Client connected from " + str(clientAddress))
 
         request = clientSocket.recv(1024).decode()
-        print(request)
+        # print(request)
         processHTMLrequest(request, clientSocket)
 
         clientSocket.close()

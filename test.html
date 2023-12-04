@@ -11,28 +11,46 @@
 </head>
 
 <body>
-  <h1>Test HTML for 403, 411, 400</h1>
+  <h1>Test HTML</h1>
 
-  <!-- Form for 403 Forbidden -->
-  <form action="/forbidden" method="GET">
-      <button type="submit">Send 403 Forbidden Request</button>
-  </form>
-
-  <!-- Form for 411 Length Required -->
-  <form action="/length_required" method="POST">
-      <button type="submit">Send 411 Length Required Request</button>
-  </form>
 
   <!-- Form for 400 Bad Request -->
-  <form action="/bad_request" method="GET">
-      <input type="text" name="param" placeholder="Enter parameter">
-      <button type="submit">Send 400 Bad Request</button>
+  <form action="" method="POST">
+    <input type="text" name="param" placeholder="Enter parameter">
+    <button type="submit">Send param to server</button>
   </form>
 
-  <!-- Form for 304 -->
-  <form action="/not_modified" method="GET">
-    <button type="submit">Send 304 Not Modified Request</button>
-</form>
+
+  <form action="/login" method="POST">
+    <button type="submit">Login</button>
+  </form>
+
+  <form action="/logout" method="POST">
+    <button type="submit">Logout</button>
+  </form>
+
+  <a href="/secrect_web.html">To secret page</a>
+
+  <!-- <button onclick="removeAllCookiesAndAddNew()">Log out with new cookie</button> -->
+
+  <script>
+    function removeAllCookiesAndAddNew() {
+        // Get all existing cookies
+        const allCookies = document.cookie.split(";");
+
+        // Clear all existing cookies by setting their expiration to the past
+        for (const cookie of allCookies) {
+            const [name] = cookie.split("=");
+            document.cookie = `${name}=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;`;
+        }
+
+        // Add a new cookie
+        document.cookie = "new_cookie=new_cookie_value; expires=Thu, 01 Jan 2030 00:00:00 UTC; path=/;";
+
+        alert("All cookies removed, and a new cookie added.");
+    }
+  </script>
+
 
 </body>
 
