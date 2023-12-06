@@ -13,12 +13,20 @@
 <body>
   <h1>Test HTML</h1>
 
+  <script>
+  // Set the lastRequestTime in localStorage
+  localStorage.setItem('lastRequestTime', new Date().toUTCString());
+  
+  // Log the lastRequestTime to the console
+  console.log(localStorage.getItem('lastRequestTime'));
+  </script>
+
 
   <!-- Form for 400 Bad Request -->
-  <form action="" method="POST">
+  <!-- <form action="" method="POST">
     <input type="text" name="param" placeholder="Enter parameter">
     <button type="submit">Send param to server</button>
-  </form>
+  </form> -->
 
 
   <form action="/login" method="POST">
@@ -29,27 +37,49 @@
     <button type="submit">Logout</button>
   </form>
 
-  <a href="/secrect_web.html">To secret page</a>
+  <a href="/secrect_web.html">To secret page that requires Login</a>
 
-  <!-- <button onclick="removeAllCookiesAndAddNew()">Log out with new cookie</button> -->
+  <!-- <label for="port">Port:</label><br> -->
+  <!-- <input type="text" id="port" name="port"><br> -->
+  <button id="btn411">Send empty body POST request to get 411 response</button>
+  <button id="btn304">Send GET with If-Modified-Since header to get 200/304</button>
 
   <script>
-    function removeAllCookiesAndAddNew() {
-        // Get all existing cookies
-        const allCookies = document.cookie.split(";");
+  document.getElementById("btn411").addEventListener("click", function() {
+      // var port = document.getElementById("port").value;
+      var port = 12000;
+      fetch('http://localhost:' + window.location.port || port + '/test.html', {
+          method: 'POST',
+          headers: {
+              'Content-Type': 'application/json'
+          },
+          // Don't include a body to trigger a 411 response
+      })
+      .then(response => console.log(response.status))
+      .catch(error => console.error('Error:', error));
+  });
 
-        // Clear all existing cookies by setting their expiration to the past
-        for (const cookie of allCookies) {
-            const [name] = cookie.split("=");
-            document.cookie = `${name}=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;`;
-        }
-
-        // Add a new cookie
-        document.cookie = "new_cookie=new_cookie_value; expires=Thu, 01 Jan 2030 00:00:00 UTC; path=/;";
-
-        alert("All cookies removed, and a new cookie added.");
-    }
+  document.getElementById("btn304").addEventListener("click", function() {
+      // var port = document.getElementById("port").value;
+      var port = 12000;
+      var lastRequestTime = localStorage.getItem('lastRequestTime');
+      
+      fetch('http://localhost:' + window.location.port || port + '/test.html', {
+          method: 'GET',
+          headers: {
+              'If-Modified-Since': lastRequestTime || 'Tue, 01 Jan 2023 00:00:00 GMT'
+          }
+      })
+      .then(response => {
+          console.log(response.status);
+          localStorage.setItem('lastRequestTime', new Date().toUTCString());
+      })
+      .catch(error => console.error('Error:', error));
+  });
   </script>
+
+  <h1>Image for HOL testing</h1>
+  <img src="/networking-meme.jpg" alt="Network Meme">
 
 
 </body>
